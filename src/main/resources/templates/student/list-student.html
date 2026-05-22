@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+  
+</head>
+<body class="p-3 mb-2 bg-primary-subtle text-primary-emphasis">
+
+<div class="container py-5">
+    
+    <div class="card shadow border-0 mb-5">
+        <div class="card-body p-4">
+            <h3 class="card-title-custom mb-4">Employee Information</h3>
+            <div class="p-3 mb-2 bg-success-subtle text-success-emphasis">
+			<form th:action="@{/student/save}" th:object="${student}" method="POST">
+                <input type="hidden" th:field="*{id}" />
+
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label for="name" class="form-label fw-bold">Name</label>
+                        <input type="text" th:field="*{name}" id="name"class="form-control" placeholder="Enter Name">
+                         <span th:if="${#fields.hasErrors('name')}"
+                        th:errors="*{name}" 
+                          class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="birthday"class="form-label fw-bold">Birth of date</label>
+                        <input type="date" th:field="*{birthday}" id="birthday"class="form-control">
+                         <span th:if="${#fields.hasErrors('birthday')}"
+                        th:errors="*{birthday}" 
+                          class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="department"class="form-label fw-bold">Department</label>
+                        <input type="text" th:field="*{department}" id="department" class="form-control" placeholder="Enter Department">
+                         <span th:if="${#fields.hasErrors('department')}"
+                        th:errors="*{department}" 
+                          class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="phone"class="form-label fw-bold">Mobile</label>
+                        <input type="text" th:field="*{phone}" id="phone"class="form-control" placeholder="Enter Mobile">
+                         <span th:if="${#fields.hasErrors('phone')}"
+                        th:errors="*{phone}" 
+                          class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="email"class="form-label fw-bold">Email</label>
+                        <input type="email" th:field="*{email}" id="email" class="form-control" placeholder="Enter Email">
+                         <span th:if="${#fields.hasErrors('email')}"
+                        th:errors="*{email}" 
+                          class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-success px-4 me-2">Submit</button>
+                    <button type="reset" class="btn btn-danger px-4">Clear</button>
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+
+    <hr class="my-5">
+
+    <h3 class="card-title-custom mb-3">Employee List</h3>
+    <form th:action="@{/student/search}" method="get">
+    <input type="text" name="keyword" placeholder="Search name..." />
+    <button type="submit">Search</button>
+    </form>
+    <div class="table-responsive shadow-sm">
+    	<div class="p-3 mb-2 bg-dark-subtle text-dark-emphasis">
+        <table class="table table-hover align-middle border mb-0">
+            <thead class="table-header-custom">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Birth of date</th>
+                    <th>Department</th>
+                    <th>Mobile</th>
+                    <th>Email</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white">
+                <tr th:each="tempStudent : ${students}">
+                    <td th:text="${tempStudent.id}"></td>
+                    <td th:text="${tempStudent.name}"></td>
+                    <td th:text="${tempStudent.birthday}"></td>
+                    <td th:text="${tempStudent.department}"></td>
+                    <td th:text="${tempStudent.phone}"></td>
+                    <td th:text="${tempStudent.email}"></td>
+                    <td class="text-center">
+                        <a th:href="@{/student/showFormForUpdate(studentId=${tempStudent.id})}" 
+                           class="btn btn-primary btn-sm me-1 px-3"
+                           onclick="if (!(confirm('Are you sure you want to delete this employee?'))) return false">
+                           Edit
+                        </a>
+                        <a th:href="@{/student/deleteshowform(studentId=${tempStudent.id})}"
+                        class="btn btn-danger btn-sm px-2"
+                           onclick="if (!(confirm('Are you sure you want to delete this employee?'))) return false">
+                           Delete
+                        </a>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(students)}">
+                    <td colspan="7" class="text-center text-muted py-4">No employees found.</td>
+                </tr>
+            	</tbody>
+       		 </table>
+        
+   		 </div>
+		</div>
+	</div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

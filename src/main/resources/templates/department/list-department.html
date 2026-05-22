@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+    <title>Department Directory</title>
+</head>
+
+<body class= "p-3 mb-2 bg-danger-subtle text-danger-emphasis">
+<div class="container mt-4">
+
+    <div class="card shadow">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h3 class="mb-0">Department Directory</h3>
+            <a th:href="@{/department/showformforadd}" class="btn btn-primary btn-sm">
+                <i class="bi bi-person-plus"></i> Add Department
+            </a>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped table-hover table-sm align-middle">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Department Name</th>
+                            <th>Department Address</th>
+                           
+                            <th class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="tempDepartment : ${department}">
+                            <td th:text="${tempDepartment.department_name}"></td>
+                            <td th:text="${tempDepartment.department_address}"></td>
+                            
+                            <td class="text-center">
+                           <!--   <a th:href="@{/employee/showformforupdate{employeeId=${tempEmployee.id}}}" 
+                              class="btn btn.sm btn-worning">
+                              <li class="bi bi-pencil-square"></li>
+                              </a>-->
+                              
+                                <a th:href="@{/department/showFormForUpdate(departmentId=${tempDepartment.department_id})}" class="btn btn-sm btn-warning">
+                                    <i class="bi bi-pencil-square" ></i>
+                                </a>
+                                <a th:href="@{/department/deleteshowform(departmentId=${tempDepartment.department_id})}"class="btn btn-sm btn-danger">
+                                    <i class="bi bi-trash" onclick="if (!(confirm('Are you sure you want to delete this department?'))) return false"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
