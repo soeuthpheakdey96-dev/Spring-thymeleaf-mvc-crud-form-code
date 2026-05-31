@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import com.dev.spring.mvc.thymeleafdemo.model.Employee;
 
-
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Integer>{
 	
